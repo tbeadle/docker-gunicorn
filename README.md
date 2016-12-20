@@ -21,14 +21,14 @@ docker build -t <image_name:version>-onbuild -f Dockerfile.<version>-onbuild .
 For instance:
 
 ```bash
-docker build -t tbeadle/gunicorn:3.5 -f Dockerfile.3.5 .
-docker build -t tbeadle/gunicorn:3.5-onbuild -f Dockerfile.3.5-onbuild .
+docker build -t tbeadle/gunicorn-nginx:3.5 -f Dockerfile.3.5 .
+docker build -t tbeadle/gunicorn-nginx:3.5-onbuild -f Dockerfile.3.5-onbuild .
 ```
 
 **Better yet**, just pull down the image from docker hub:
 
 ```bash
-docker pull tbeadle/gunicorn:3.5-onbuild
+docker pull tbeadle/gunicorn-nginx:3.5-onbuild
 ```
 
 ## Building the image for your app
@@ -37,7 +37,7 @@ To use the image for for your application, simply create a Dockerfile in the
 root of your application's repo that at least contains:
 
 ```
-FROM tbeadle/gunicorn:3.5-onbuild
+FROM tbeadle/gunicorn-nginx:3.5-onbuild
 ```
 
 Obviously, replace `3.5` with the appropriate version if using something other
@@ -153,3 +153,8 @@ processed.  Scripts in a `docker/post-deploy.d/` directory will get run
 Logs for nginx are stored in /var/log/supervisor/nginx.  Logs for gunicorn are stored in
 /var/log/supervisor/gunicorn.  Output from supervisor is sent to stdout when
 `docker-compose up` is run.
+
+## Contributing
+
+**Please please please** help me make this better by submitting pull requests,
+reporting bugs, submitting feature requests, etc.
