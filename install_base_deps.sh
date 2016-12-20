@@ -12,6 +12,7 @@ apt-get update
 
 apt-get install -y --no-install-recommends \
 	ca-certificates \
+	cron \
 	gcc \
 	libpcre3-dev \
 	libexpat1-dev \
@@ -31,4 +32,4 @@ case ${PYTHON_VERSION} in
 	;;
 esac
 
-rm -r /var/lib/apt/lists/*
+rm -r /var/lib/apt/lists/* /etc/cron.*/*

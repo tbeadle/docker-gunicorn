@@ -17,7 +17,7 @@ if [ $# -eq 0 ]; then
 			"${x}"
 		fi
 	done
-	mkdir -p /var/log/supervisor/{nginx,gunicorn}
+	mkdir -p /var/log/supervisor/{cron,nginx,gunicorn}
 	exec supervisord -c /etc/supervisord.conf
 else
 	exec "$@"

@@ -13,6 +13,11 @@ serverurl=unix:///var/run/supervisord.sock
 [rpcinterface:supervisor]
 supervisor.rpcinterface_factory=supervisor.rpcinterface:make_main_rpcinterface
 
+[program:cron]
+command=/usr/sbin/cron -f -L 0
+stdout_logfile=/var/log/supervisor/%(program_name)s/stdout.log
+stderr_logfile=/var/log/supervisor/%(program_name)s/stderr.log
+
 [program:nginx]
 command=/usr/local/sbin/nginx -c /etc/nginx.conf -g "daemon off;"
 stdout_logfile=/var/log/supervisor/%(program_name)s/stdout.log
