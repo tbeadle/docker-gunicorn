@@ -1,0 +1,42 @@
+version: "2"
+
+services:
+  db:
+    image: postgres:9.4
+    environment:
+      POSTGRES_PASSWORD: "supersecretpassword"
+    volumes:
+      - /var/lib/postgresql/data
+
+  ui:
+    image: tbeadle/djtest:0.1
+    build:
+      context: .
+    environment:
+      # This is useful during development to have gunicorn automatically reload the
+      # application when changes to the code are detected.
+      GUNICORN_ARGS: --reload
+
+      SSL_BUNDLE: /private/djtest.pem
+
+      # Don't do this in production.  It's only here so that we can use a
+      # self-signed cert for this example.
+      USE_HSTS: ""
+
+      PGHOST: db
+      PGUSER: postgres
+      PGPASSWORD: supersecretpassword
+      PGDATABASE: postgres
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      # This is useful during development to be able to edit your application
+      # locally and have it reflected in the container.
+      - .:/app
+
+      # I prefer to not include private things like certs in the image but
+      # rather mount them from the repo containing the docker-compose.yml file.
+      - ./private:/private:ro
+
+      - /var/log/supervisor
