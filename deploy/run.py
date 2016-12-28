@@ -28,6 +28,14 @@ NGINX_VARS = {
 SUPERVISOR_VARS = {
     'APP_MODULE': os.environ.get('APP_MODULE', 'proj.wsgi'),
     'GUNICORN_ARGS': os.environ.get('GUNICORN_ARGS', ''),
+    'WEBPACK_CONFIG':
+        os.environ['WEBPACK_CONFIG']
+        if (
+            not os.environ.get('PROD', '') and
+            os.path.exists(os.environ['WEBPACK_CONFIG']) and
+            os.path.exists(os.path.join('/node_modules', '.bin', 'webpack')))
+        else '',
+    'WEBPACK_ARGS': os.environ.get('WEBPACK_ARGS', ''),
     'WWW_USER': os.environ.get('WWW_USER', 'www-data'),
 }
 
@@ -38,7 +46,7 @@ ENV = jinja2.Environment(
     autoescape=False,
     loader=jinja2.FileSystemLoader([
         '{}/docker/templates'.format(os.environ['APP_ROOT']),
-         os.environ['TEMPLATE_DIR'],
+        os.environ['TEMPLATE_DIR'],
     ]),
     undefined=jinja2.StrictUndefined,
 )
@@ -69,7 +77,7 @@ def render_templates():
 class DjangoHook:
     def __init__(self):
         try:
-            import django
+            import django  # NOQA
         except ImportError:
             raise InvalidProjectError
         self.manage_path = os.path.join(os.environ['APP_ROOT'], 'manage.py')

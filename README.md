@@ -51,6 +51,26 @@ Next, create a `docker` directory at the root of your application's repo.  In
 that directory, create a `requirements.txt` file that will be given to `pip
 install -r` when your application's image is built.
 
+### Installing javascript dependencies
+
+To have javascript depenedencies installed in your image, you may create a
+`package.json` file in the `docker` directory that was just created.  This file
+will be used by `npm install --production` to install all production
+dependencies (i.e. those not in the `devDependencies` key) into the image).
+These packages will be installed in `/node_modules` so that you can use lines
+like `require('lodash')` in your javascript code and not have to provide
+explicit paths or have the dependencies inside of your project's codebase.
+
+### Running webpack
+
+If there is a `docker/webpack.config.js` file (or whatever the `WEBPACK_CONFIG`
+variable is set to) and webpack was installed as a dependency (see previous
+section), then webpack will be run to bundle your static assets in to the
+location(s) defined in that config.  You can pass additional args to webpack by
+defining them in a `WEBPACK_ARGS` environment variable.  See the `using_webpack`
+project in the `samples` directory of this repo for an example of how that can
+be used.
+
 ## Starting your container
 
 To start a container using this image, I suggest using
@@ -80,6 +100,8 @@ Variable name | Meaning
 --------------|------------
 APP_MODULE | The python module containing the application's entry point.  (Defaults to `proj.wsgi`)
 GUNICORN_ARGS | Additional command-line arguments that will get passed to gunicorn.  (Defaults to the empty string)
+WEBPACK_ARGS | Additional arguments to pass to webpack, such as "-p" to minify the output bundles.  Defaults to "".
+WEBPACK_CONFIG | An alternative location of the webpack config file.  (Defaults to /app/docker/webpack.config.js).
 WWW_USER | The user to run gunicorn as.  (Defaults to `www-data`)
 
 The templates are [Jinja2](http://jinja.pocoo.org/)-based templates stored in
@@ -89,6 +111,21 @@ The templates are [Jinja2](http://jinja.pocoo.org/)-based templates stored in
 
 Note that, when setting variables to paths located within your application's
 directory, your application will be rooted at `/app` within the image.
+
+If the container is started and there is no `PROD` environment variable set (or
+it's set to an empty string), this indicates that it is being run in
+"development" mode.  In this mode, there are 2 additional things that happen
+during container startup:
+
+ - If there is a `package.json` file in the `docker` directory, `npm install` is
+   run again, this time in "development" mode, to install **devDependencies**.
+   It keeps track of the last time this was run so that, if you stop and start
+   the container, it won't do this again unless the package.json has been
+   modified since that time.
+ - If using webpack, the `supervisord.conf` file will have a section added to
+   it so that webpack will be run in the background with the `--watch` flag.
+   This will cause it to detect when changes are made to your source javascript
+   files and automatically generate new bundles at that time.
 
 A sample `docker-compose.yml` could look like this:
 
@@ -102,7 +139,9 @@ services:
       context: .
     environment:
       GUNICORN_ARGS: --reload
+      PROD: 1
       SSL_BUNDLE: /private/sample.pem
+      WEBPACK_ARGS: -p
     ports:
       - "80:80"
       - "443:443"

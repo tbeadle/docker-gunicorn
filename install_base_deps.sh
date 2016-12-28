@@ -7,6 +7,8 @@ echo "    nginx ${NGINX_VERSION}"
 echo "    python ${PYTHON_VERSION}"
 echo "    gunicorn ${GUNICORN_VERSION}"
 echo "    supervisor ${SUPERVISOR_VERSION}"
+echo "    node ${NODE_VERSION}"
+echo "    npm ${NPM_VERSION}"
 echo ""
 apt-get update
 
@@ -22,6 +24,7 @@ apt-get install -y --no-install-recommends \
 	make \
 	vim \
 	wget \
+	xz-utils \
 
 
 # Supervisord doesn't currently support running under python3,

@@ -5,13 +5,17 @@ ENV \
 	NGINX_VERSION=1.11.7 \
 	GUNICORN_VERSION=19.6.0 \
 	SUPERVISOR_VERSION=3.3.1 \
+	NODE_VERSION=6.9.2 \
+	NPM_VERSION=4.1.1 \
 	LANG=en_US.UTF-8 \
 	WWW_USER=www-data \
 	WWW_GROUP=www-data \
 	APP_ROOT=/app \
 	INSTALL_ROOT=/usr/local \
 	BUILD_ROOT=/tmp/build \
-	TEMPLATE_DIR=/etc/deploy/templates
+	TEMPLATE_DIR=/etc/deploy/templates \
+	WEBPACK_CONFIG=/app/docker/webpack.config.js \
+	PACKAGE_JSON=/app/docker/package.json
 
 COPY install_base_deps.sh ${BUILD_ROOT}/install_base_deps.sh
 RUN ${BUILD_ROOT}/install_base_deps.sh

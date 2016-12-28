@@ -10,6 +10,15 @@ if [ $# -eq 0 ]; then
 			"${x}"
 		fi
 	done
+	if [ -f ${PACKAGE_JSON} ] && [ -z "${PROD:-}" ]; then
+		NPM_TIMESTAMP_FILE=/node_modules/.timestamp
+		if [ ! -f "${NPM_TIMESTAMP_FILE}" ] || [ "${PACKAGE_JSON}" -nt "${NPM_TIMESTAMP_FILE}" ]; then
+			# Only run "npm install" again if there has been a change to the package.json.
+			echo "Installing dev javascript dependencies defined in ${PACKAGE_JSON} to /node_modules via npm."
+			(cd / && NODE_ENV=development npm install $(dirname ${PACKAGE_JSON}))
+			touch ${NPM_TIMESTAMP_FILE}
+		fi
+	fi
 	/etc/deploy/run.py
 	for x in ${APP_ROOT}/docker/post_deploy.d/*; do
 		if [ -x "${x}" ]; then
@@ -18,6 +27,9 @@ if [ $# -eq 0 ]; then
 		fi
 	done
 	mkdir -p /var/log/supervisor/{cron,nginx,gunicorn}
+	if [ -z "${PROD}" ]; then
+		mkdir -p /var/log/supervisor/webpack
+	fi
 	exec supervisord -c /etc/supervisord.conf
 else
 	exec "$@"
