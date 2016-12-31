@@ -1,14 +1,12 @@
-{%  load render_bundle from webpack_loader %}
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset='utf-8'>
-</head>
-<body>
+{% extends 'app/base.tpl' %}
+{% load render_bundle from webpack_loader %}
+
+{% block content %}
 <div id='app'>
-<input v-model='stuff' placeholder='Enter some text here'>
-<p>${ stuff }</p>
+	<my-comp></my-comp>
 </div>
+{% endblock %}
+
+{% block extra_js %}
 {% render_bundle 'main' %}
-</body>
-</html>
+{% endblock %}

@@ -5,9 +5,9 @@ services:
     image: tbeadle/docker-django-webpack:0.1
     build:
       context: .
-    environment:
+    #environment:
       # Minify javascript bundles
-      WEBPACK_ARGS: -p
+      #WEBPACK_ARGS: -p
 
       # Uncomment this in production.  With it commented, "webpack --watch" will
       # be run to continue monitoring your source javascript for changes and

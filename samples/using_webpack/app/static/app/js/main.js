@@ -1,8 +1,10 @@
-var Vue = require('vue/dist/vue');
+import Vue from 'vue';
+import Comp from './components/Comp.vue';
+
 var app = new Vue({
 	el: '#app',
-	delimiters: ['${', '}'],
-	data: {
-		stuff: '',
+	components: {
+		'my-comp': Comp,
 	},
+	delimiters: ['${', '}'],
 });
