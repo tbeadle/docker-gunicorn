@@ -15,7 +15,8 @@ if [ $# -eq 0 ]; then
 		if [ ! -f "${NPM_TIMESTAMP_FILE}" ] || [ "${PACKAGE_JSON}" -nt "${NPM_TIMESTAMP_FILE}" ]; then
 			# Only run "npm install" again if there has been a change to the package.json.
 			echo "Installing dev javascript dependencies defined in ${PACKAGE_JSON} to /node_modules via npm."
-			(cd / && NODE_ENV=development npm install $(dirname ${PACKAGE_JSON}))
+			mkdir -p /node_modules
+			(cd $(dirname ${PACKAGE_JSON}) && NODE_ENV=development npm install --prefix /)
 			touch ${NPM_TIMESTAMP_FILE}
 		fi
 	fi
