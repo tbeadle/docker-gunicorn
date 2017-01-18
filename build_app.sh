@@ -4,7 +4,7 @@ set -eo pipefail
 shopt -s nullglob
 
 for x in ${APP_ROOT}/docker/pre-build.d/*; do
-	if [ -x "${x}" ]; then
+	if [ ! -d "${x}" -a -x "${x}" ]; then
 		echo "----> Running ${x}"
 		"${x}"
 	fi
@@ -25,7 +25,7 @@ if [ -f ${PACKAGE_JSON} ]; then
 fi
 
 for x in ${APP_ROOT}/docker/post-build.d/*; do
-	if [ -x "${x}" ]; then
+	if [ ! -d "${x}" -a -x "${x}" ]; then
 		echo "----> Running ${x}"
 		"${x}"
 	fi
