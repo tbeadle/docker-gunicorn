@@ -4,7 +4,7 @@ set -eo pipefail
 shopt -s nullglob
 
 if [ $# -eq 0 ]; then
-	for x in ${APP_ROOT}/docker/pre_deploy.d/*; do
+	for x in ${APP_ROOT}/docker/pre-deploy.d/*; do
 		if [ -x "${x}" ]; then
 			echo "-----> Running ${x}"
 			"${x}"
@@ -21,14 +21,14 @@ if [ $# -eq 0 ]; then
 		fi
 	fi
 	/etc/deploy/run.py
-	for x in ${APP_ROOT}/docker/post_deploy.d/*; do
+	for x in ${APP_ROOT}/docker/post-deploy.d/*; do
 		if [ -x "${x}" ]; then
 			echo "-----> Running ${x}"
 			"${x}"
 		fi
 	done
 	mkdir -p /var/log/supervisor/{cron,nginx,gunicorn}
-	if [ -z "${PROD}" ]; then
+	if [ -z "${PROD}" -a -f ${WEBPACK_CONFIG} ]; then
 		mkdir -p /var/log/supervisor/webpack
 	fi
 	exec supervisord -c /etc/supervisord.conf
