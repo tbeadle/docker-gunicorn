@@ -19,6 +19,7 @@ NGINX_VARS = {
     'CA_CERT': os.environ.get('CA_CERT', ''),
     'CLIENT_MAX_BODY_SIZE': os.environ.get('CLIENT_MAX_BODY_SIZE', '10m'),
     'KEEPALIVE_TIMEOUT': os.environ.get('KEEPALIVE_TIMEOUT', '0'),
+    'INCLUDE_HTTP_CONF': os.environ.get('INCLUDE_HTTP_CONF', None),
     'INCLUDE_SERVER_CONF': os.environ.get('INCLUDE_SERVER_CONF', None),
     'SERVER_NAME': os.environ.get('SERVER_NAME', ''),
     'SSL_BUNDLE': os.environ.get('SSL_BUNDLE', ''),

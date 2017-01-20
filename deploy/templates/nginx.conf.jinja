@@ -23,6 +23,10 @@ http {
 		server 127.0.0.1:8000;
 	}
 
+	{% if INCLUDE_HTTP_CONF -%}
+		include {{ INCLUDE_HTTP_CONF }};
+	{%- endif %}
+
 	server {
 		{% if SERVER_NAME -%}
 			server_name {{ SERVER_NAME }};
