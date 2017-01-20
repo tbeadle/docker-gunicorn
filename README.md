@@ -193,6 +193,14 @@ Logs for nginx are stored in /var/log/supervisor/nginx.  Logs for gunicorn are s
 /var/log/supervisor/gunicorn.  Output from supervisor is sent to stdout when
 `docker-compose up` is run.
 
+## Cron
+
+A cron process is managed by supervisord to make it easy for you to add cron
+jobs.  If you need access to environment variables that are defined for the
+container, you can source the file /etc/cron.env to have those variables
+available to your script, since cron normally runs jobs with a mostly empty
+environment.
+
 ## Contributing
 
 **Please please please** help me make this better by submitting pull requests,
