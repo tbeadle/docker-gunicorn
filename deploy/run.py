@@ -29,6 +29,7 @@ NGINX_VARS = {
 
 SUPERVISOR_VARS = {
     'APP_MODULE': os.environ.get('APP_MODULE', 'proj.wsgi'),
+    'APP_ROOT': os.environ.get('APP_ROOT', ''),
     'GUNICORN_ARGS': os.environ.get('GUNICORN_ARGS', ''),
     'WEBPACK_CONFIG':
         os.environ['WEBPACK_CONFIG']

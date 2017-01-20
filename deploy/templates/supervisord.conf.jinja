@@ -28,6 +28,7 @@ command=/usr/local/bin/gunicorn -c /etc/gunicorn.conf {{ GUNICORN_ARGS }} {{ APP
 user={{ WWW_USER }}
 stdout_logfile=/var/log/supervisor/%(program_name)s/stdout.log
 stderr_logfile=/var/log/supervisor/%(program_name)s/stderr.log
+directory={{ APP_ROOT }}
 
 {% if WEBPACK_CONFIG %}
 [program:webpack]
