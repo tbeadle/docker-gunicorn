@@ -13,6 +13,8 @@ class InvalidProjectError(Exception):
     pass
 
 
+CRON_ENV = '/etc/cron.env'
+
 NGINX_VARS = {
     'CA_CERT': os.environ.get('CA_CERT', ''),
     'CLIENT_MAX_BODY_SIZE': os.environ.get('CLIENT_MAX_BODY_SIZE', '10m'),
@@ -73,6 +75,33 @@ def render_templates():
         '/etc/gunicorn.conf'
     )
 
+def save_cron_env():
+    print(
+        'Saving environment to be available for cron jobs in {}.'
+        .format(CRON_ENV)
+    )
+    if os.path.exists(CRON_ENV):
+        os.unlink(CRON_ENV)
+    with open(CRON_ENV, 'w') as fil:
+        pass
+    os.chown(CRON_ENV, 0, 0)
+    os.chmod(CRON_ENV, 0o400)
+    with open(CRON_ENV, 'a') as fil:
+        for key in sorted(os.environ):
+            val = os.environ[key]
+
+            # Escape single quote characters in the values because we'll be
+            # surrounding the value in single-quotes.
+            val = val.replace(r"'", r"\'")
+
+            # Escape backslashes so the shell doesn't try to interpret the
+            # following character as special.
+            val = val.replace("\\", "\\\\")
+
+            print("export {}='{}'".format(key, val), file=fil)
+
+    return
+
 
 class DjangoHook:
     def __init__(self):
@@ -97,7 +126,9 @@ class DjangoHook:
         with open(path, 'w') as fil:
             print(
                 "#!/bin/bash\n"
-                "{} clearsessions >/dev/null 2>&1\n".format(self.manage_path),
+                "[[ -f {0} ]] && . {0}\n"
+                "{1} clearsessions >/dev/null 2>&1\n"
+                .format(CRON_ENV, self.manage_path),
                 file=fil
             )
         os.chmod(path, 0o755)
@@ -154,6 +185,7 @@ class DjangoHook:
 
 def main():
     render_templates()
+    save_cron_env()
     try:
         proj = DjangoHook()
     except InvalidProjectError:
