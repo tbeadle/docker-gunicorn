@@ -201,6 +201,20 @@ container, you can source the file /etc/cron.env to have those variables
 available to your script, since cron normally runs jobs with a mostly empty
 environment.
 
+## Using with Django apps
+
+When a container using this image is started, it will attempt to detect if it is
+a Django project by looking for Django's `manage.py` script in the root of the
+app directory.  If it detects that it is a Django project, it will:
+
+ - Add a daily cron job to run `manage.py clearsessions` (see
+   https://docs.djangoproject.com/en/1.10/ref/django-admin/#django-contrib-sessions).
+ - If a database is defined in the project's `settings.py` file, it will wait
+   for the database to accept connections and then run `manage.py migrate` to
+   run database migrations.
+ - Run `manage.py collectstatic -l --noinput` to collect static files in
+   `STATIC_ROOT`.
+
 ## Contributing
 
 **Please please please** help me make this better by submitting pull requests,

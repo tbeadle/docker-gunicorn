@@ -143,32 +143,28 @@ class DjangoHook:
         ])
 
     def migrate_db(self):
-        has_db = bool(
-            subprocess.check_output([
-                self.manage_path,
-                'shell',
-                '-c',
-                'from django.conf import settings; '
-                'print(settings.DATABASES or "")'
-            ]).strip()
+        def make_shell():
+            return subprocess.Popen(
+                [self.manage_path, 'shell'],
+                stdin=subprocess.PIPE,
+                stdout=subprocess.PIPE,
+                stderr=subprocess.PIPE
+            )
+        out, outerr = make_shell().communicate(
+            'from django.conf import settings; '
+            'print(settings.DATABASES or "")'
         )
-        if not has_db:
+        if 'ENGINE' not in out:
             return
 
         print('Waiting for database to be ready.')
         for _ in range(20):
-            output = subprocess.check_output([
-                self.manage_path,
-                'shell',
-                '-c',
+            out, outerr = make_shell().communicate(
                 'from django.db.utils import OperationalError\n'
                 'from django.db import connection\n'
-                'try:\n'
-                '    connection.cursor()\n'
-                'except OperationalError:\n'
-                '    print("Database not ready yet")'
-            ])
-            if not output:
+                'connection.cursor()'
+            )
+            if 'Traceback' not in out:
                 break
             else:
                 time.sleep(1)
