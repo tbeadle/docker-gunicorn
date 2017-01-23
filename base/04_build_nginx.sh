@@ -19,6 +19,7 @@ CONFIG_ARGS="--prefix=${INSTALL_ROOT} \
 	--pid-path=/var/log/nginx/nginx.pid \
 	--http-log-path=/var/log/nginx/access.log \
 	--user=${WWW_USER} --group=${WWW_GROUP} \
+	--with-http_auth_request_module \
 	--with-http_ssl_module \
 	--with-http_v2_module \
 	--without-http_ssi_module \
