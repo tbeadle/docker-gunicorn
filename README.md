@@ -106,9 +106,13 @@ WEBPACK_CONFIG | An alternative location of the webpack config file.  (Defaults 
 WWW_USER | The user to run gunicorn as.  (Defaults to `www-data`)
 
 The templates are [Jinja2](http://jinja.pocoo.org/)-based templates stored in
-`/etc/deploy/templates/`, but can be overridden by creating any of
+`/etc/deploy/templates/base/`, but can be overridden by creating any of
 `nginx.conf.jinja`, `supervisord.conf.jinja`, or `gunicorn.conf.jinja` in a
 `docker/templates/` directory at the root of your application's repo.
+
+If you do define your own templates, all environment variables starting with
+`USER_` will also be available within any of those templates.  Also, if you want
+to *extend* the base templates, just use `{% extends 'base/<templatename>' %}`.
 
 Note that, when setting variables to paths located within your application's
 directory, your application will be rooted at `/app` within the image.

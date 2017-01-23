@@ -46,6 +46,10 @@ SUPERVISOR_VARS = {
 GUNICORN_VARS = {
 }
 
+USER_VARS = dict(
+    item for item in os.environ.items() if item[0].startswith('USER_')
+)
+
 ENV = jinja2.Environment(
     autoescape=False,
     loader=jinja2.FileSystemLoader([
@@ -56,7 +60,10 @@ ENV = jinja2.Environment(
 )
 
 def render_template(name, tpl_vars, outfile):
-    template = ENV.get_template(name)
+    template = ENV.select_template((name, 'base/{}'.format(name)))
+    if USER_VARS:
+        tpl_vars = dict(tpl_vars)
+        tpl_vars.update(USER_VARS)
     with open(outfile, 'w') as fil:
         print(template.render(**tpl_vars), file=fil)
 
