@@ -1,8 +1,13 @@
 #!/bin/bash
 
-REPO=tbeadle/gunicorn-nginx
+repo=tbeadle/gunicorn-nginx
 
-for VER in 3.6 3.5 2.7; do
-	docker build -t ${REPO}:${VER} -f Dockerfile.${VER} .
-	docker build -t ${REPO}:${VER}-onbuild -f Dockerfile.${VER}-onbuild .
+versions=( "$@" )
+if [ ${#versions[@]} -eq 0 ]; then
+	versions=( 2.7 3.5 3.6 )
+fi
+
+for ver in "${versions[@]}"; do
+	docker build -t ${repo}:${ver} -f Dockerfile.${ver} .
+	docker build -t ${repo}:${ver}-onbuild -f Dockerfile.${ver}-onbuild .
 done
