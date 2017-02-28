@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -eo pipefail
+
 repo=tbeadle/gunicorn-nginx
 
 versions=( "$@" )

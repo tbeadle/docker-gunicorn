@@ -22,6 +22,7 @@ apt-get install -y --no-install-recommends \
 	libssl-dev \
 	locales \
 	make \
+	mime-support \
 	vim \
 	wget \
 	xz-utils \
