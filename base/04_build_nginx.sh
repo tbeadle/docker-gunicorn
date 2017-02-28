@@ -31,4 +31,8 @@ CONFIG_ARGS="--prefix=${INSTALL_ROOT} \
 ./configure ${CONFIG_ARGS}
 make -j 2
 make install
+# In case the mime-support package gets installed at some point, we don't want
+# its mime.types overwriting NGINX's.  They are in different formats.
+mkdir -p /etc/nginx
+mv /etc/mime.types /etc/nginx/mime.types
 ldconfig
