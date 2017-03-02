@@ -160,20 +160,20 @@ class DjangoHook:
                 stderr=subprocess.PIPE
             )
         out, outerr = make_shell().communicate(
-            'from django.conf import settings; '
-            'print(settings.DATABASES or "")'
+            ('from django.conf import settings; '
+            'print(settings.DATABASES or "")').encode('ascii')
         )
-        if 'ENGINE' not in out:
+        if 'ENGINE' not in out.decode('ascii'):
             return
 
         print('Waiting for database to be ready.')
         for _ in range(20):
             out, outerr = make_shell().communicate(
-                'from django.db.utils import OperationalError\n'
+                ('from django.db.utils import OperationalError\n'
                 'from django.db import connection\n'
-                'connection.cursor()'
+                'connection.cursor()').encode('ascii')
             )
-            if 'Traceback' not in out:
+            if 'Traceback' not in out.decode('ascii'):
                 break
             else:
                 time.sleep(1)
