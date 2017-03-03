@@ -75,7 +75,7 @@ http {
 						alias           {{ STATIC_ROOT }};
 						access_log      off;
 						log_not_found   off;
-						expires         7d;
+						expires         {{ STATIC_EXPIRES }};
 						add_header      pragma public;
 						add_header      cache-control "public";
 					{%  endblock %}

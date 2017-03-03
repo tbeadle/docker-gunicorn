@@ -23,6 +23,7 @@ NGINX_VARS = {
     'INCLUDE_SERVER_CONF': os.environ.get('INCLUDE_SERVER_CONF', None),
     'SERVER_NAME': os.environ.get('SERVER_NAME', ''),
     'SSL_BUNDLE': os.environ.get('SSL_BUNDLE', ''),
+    'STATIC_EXPIRES': os.environ.get('STATIC_EXPIRES', '7d'),
     'STATIC_URL': os.environ.get('STATIC_URL', '/static/'),
     'STATIC_ROOT': os.environ.get('STATIC_ROOT', '/static/'),
     'USE_HSTS': bool(os.environ.get('USE_HSTS', '1')),

@@ -91,6 +91,7 @@ INCLUDE_HTTP_CONF | The path to an additional Jinja2 template that will get *inc
 INCLUDE_SERVER_CONF | The path to an additional Jinja2 template that will get *included* in the **server** context of the nginx config file.  (Defaults to no additional config)
 SERVER_NAME | A space-separated list of server names used to match the **Host** header of client requests. (Defaults to using no `server_name` statement)
 SSL_BUNDLE | The patch to a .pem formatted SSL cert.  If specified, then all HTTP requests will be redirected to HTTPS.  (Defaults to not using SSL.  Please HTTPS all the things!)
+STATIC_EXPIRES | Indicates for how long static files show be allowed to be cached.  See http://nginx.org/en/docs/syntax.html for the expected format.  (Defaults to `7d`)
 STATIC_URL | The URL path to where static files are to be stored.  These will be served by nginx and not proxied to gunicorn.  (Defaults to `/static/`)
 STATIC_ROOT | The file system path where static files will be stored.  (Defaults to `/static/`)
 USE_HSTS | If set to an empty string, HSTS will not be enabled.  Otherwise, it will be enabled.  (Defaults to being enabled and should **not** be disabled in production!)
