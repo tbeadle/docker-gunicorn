@@ -3,7 +3,7 @@ events {
 
 http {
 	{% block http_context %}
-		include /etc/mime.types.default;
+		include /etc/nginx/mime.types;
 		server_tokens off;
 
 		access_log /var/log/supervisor/nginx/access.log combined;

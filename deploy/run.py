@@ -71,7 +71,7 @@ def render_templates():
     render_template(
         'nginx.conf.jinja',
         NGINX_VARS,
-        '/etc/nginx.conf'
+        '/etc/nginx/nginx.conf'
     )
     render_template(
         'supervisord.conf.jinja',

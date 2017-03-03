@@ -14,7 +14,7 @@ tar -xC ${BUILD_ROOT}/nginx --strip-components=1 -f ${BUILD_ROOT}/nginx.tar.gz
 cd ${BUILD_ROOT}/nginx
 
 CONFIG_ARGS="--prefix=${INSTALL_ROOT} \
-	--conf-path=/etc/nginx.conf \
+	--conf-path=/etc/nginx/nginx.conf \
 	--error-log-path=/var/log/nginx/error.log \
 	--pid-path=/var/log/nginx/nginx.pid \
 	--http-log-path=/var/log/nginx/access.log \
