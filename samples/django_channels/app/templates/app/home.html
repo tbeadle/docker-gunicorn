@@ -1,0 +1,16 @@
+{% load staticfiles %}
+
+<!DOCTYPE html>
+<html>
+  <body>
+    <input type='text' id='inp'>
+    <button onclick='socket.send(document.getElementById("inp").value); return false;'>Click to send message</button>
+    <div id='outp'></div>
+    <script type="text/javascript">
+      socket = new WebSocket("ws://" + window.location.host + "/ws/");
+      socket.onmessage = function(e) {
+          document.getElementById('outp').innerText += e.data + '\n';
+      }
+    </script>
+  </body>
+</html>

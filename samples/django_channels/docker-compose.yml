@@ -1,0 +1,28 @@
+version: "2"
+services:
+  redis:
+    image: redis:3.2.1
+
+  daphne:
+    image: tbeadle/channels-demo-daphne:1.0.3
+    build:
+      context: .
+      dockerfile: Dockerfile.daphne
+    depends_on:
+      - redis
+
+  ui:
+    image: tbeadle/channels-demo-ui:0.1.0
+    build: .
+    environment:
+      STATIC_ROOT: /static/
+      USER_DAPHNE_HOST: daphne:8000
+      USER_NUM_WORKERS: 4
+      USER_WS_PATH: /ws/
+      SECRET_KEY: '_mgjah@&zz(gk7uo9*r+-lz+ulem--=gbyq054+arh1l8k6u8x'
+      SERVER_NAME: channels-demo
+    ports:
+      - 127.0.0.1:443:443
+      - 127.0.0.1:80:80
+    depends_on:
+      - redis

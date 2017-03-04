@@ -1,0 +1,12 @@
+{% include 'base/supervisord.conf.jinja' %}
+
+{% if USER_NUM_WORKERS %}
+[program:worker]
+process_name=%(program_name)s_%(process_num)s
+numprocs={{ USER_NUM_WORKERS }}
+command=python {{ APP_ROOT }}/manage.py runworker --exclude-channels='http.*'
+user={{ WWW_USER }}
+directory={{ APP_ROOT }}
+stdout_logfile=/var/log/supervisor/nginx/%(program_name)s_%(process_num)s.stdout.log
+stderr_logfile=/var/log/supervisor/nginx/%(program_name)s_%(process_num)s.stderr.log
+{% endif %}
