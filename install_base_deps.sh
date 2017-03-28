@@ -20,6 +20,7 @@ apt-get install -y --no-install-recommends \
 	libpcre3-dev \
 	libexpat1-dev \
 	libffi-dev \
+	libsqlite3-dev \
 	libssl-dev \
 	locales \
 	make \
