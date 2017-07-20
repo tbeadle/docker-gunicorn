@@ -12,5 +12,14 @@ fi
 
 for ver in "${versions[@]}"; do
 	docker build -t ${repo}:${ver}-r${rev} -f Dockerfile.${ver} .
+	docker tag ${repo}:${ver}-r${rev}-onbuild ${repo}:${ver}-onbuild
 	docker build -t ${repo}:${ver}-r${rev}-onbuild -f Dockerfile.${ver}-onbuild .
+	docker tag ${repo}:${ver}-r${rev}-onbuild ${repo}:${ver}-onbuild
+done
+echo "To push the images, run:"
+for ver in "${versions[@]}"; do
+	echo "docker push ${repo}:${ver}-r${rev}"
+	echo "docker push ${repo}:${ver}"
+	echo "docker push ${repo}:${ver}-r${rev}-onbuild"
+	echo "docker push ${repo}:${ver}-onbuild"
 done
