@@ -14,8 +14,8 @@ See the `examples` directory for some example projects using this.
 To build these images, simply run:
 
 ```bash
-docker build -t <image_name:version> -f Dockerfile.<version> .
-docker build -t <image_name:version>-onbuild -f Dockerfile.<version>-onbuild .
+docker build -t <image_name:version-rev> -f Dockerfile.<version> .
+docker build -t <image_name:version-rev>-onbuild -f Dockerfile.<version>-onbuild .
 ```
 
 For instance:
@@ -25,10 +25,12 @@ docker build -t tbeadle/gunicorn-nginx:3.5 -f Dockerfile.3.5 .
 docker build -t tbeadle/gunicorn-nginx:3.5-onbuild -f Dockerfile.3.5-onbuild .
 ```
 
+You can also just use the supplied `build_images.sh` script.
+
 **Better yet**, just pull down the image from docker hub:
 
 ```bash
-docker pull tbeadle/gunicorn-nginx:3.5-onbuild
+docker pull tbeadle/gunicorn-nginx:3.6-r1-onbuild
 ```
 
 ## Building the image for your app
@@ -37,11 +39,14 @@ To use the image for for your application, simply create a Dockerfile in the
 root of your application's repo that at least contains:
 
 ```
-FROM tbeadle/gunicorn-nginx:3.5-onbuild
+FROM tbeadle/gunicorn-nginx:3.6-r1-onbuild
 ```
 
-Obviously, replace `3.5` with the appropriate version if using something other
-than Python 3.5 for your application.
+Obviously, replace `3.6` with the appropriate version if using something other
+than Python 3.6 for your application.
+
+The `-r#` in the tag represents the version of the image for that particular
+python version.
 
 That is all that is **required** to be in your Dockerfile.
 

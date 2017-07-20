@@ -3,6 +3,7 @@
 set -eo pipefail
 
 repo=tbeadle/gunicorn-nginx
+rev=1
 
 versions=( "$@" )
 if [ ${#versions[@]} -eq 0 ]; then
@@ -10,6 +11,6 @@ if [ ${#versions[@]} -eq 0 ]; then
 fi
 
 for ver in "${versions[@]}"; do
-	docker build -t ${repo}:${ver} -f Dockerfile.${ver} .
-	docker build -t ${repo}:${ver}-onbuild -f Dockerfile.${ver}-onbuild .
+	docker build -t ${repo}:${ver}-r${rev} -f Dockerfile.${ver} .
+	docker build -t ${repo}:${ver}-r${rev}-onbuild -f Dockerfile.${ver}-onbuild .
 done
