@@ -90,6 +90,7 @@ The following environment variables are supported:
 Variable name | Meaning
 --------------|------------
 CA_CERT | The path to a .pem formatted file used for OCSP stapling.  (Defaults to not using OCSP stapling)
+CLIENT_BODY_BUFFER_SIZE | The buffer size for reading the body of a client request.  (Defaults to 128k)
 CLIENT_MAX_BODY_SIZE | The maximum size for the body of a request.  (Defaults to 10 MB)
 KEEPALIVE_TIMEOUT | The timeout during which a keep-alive client connection will stay open on the server side.  (Defaults to disabling keep-alive client connections)
 INCLUDE_HTTP_CONF | The path to an additional Jinja2 template that will get *included* in the **http** context of the nginx config file.  (Defaults to no additional config)

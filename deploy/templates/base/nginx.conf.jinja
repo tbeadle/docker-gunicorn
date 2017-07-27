@@ -20,6 +20,7 @@ http {
 
 		keepalive_timeout {{ KEEPALIVE_TIMEOUT }};
 		client_max_body_size {{ CLIENT_MAX_BODY_SIZE }};
+		client_body_buffer_size {{ CLIENT_BODY_BUFFER_SIZE }};
 
 		upstream gunicorn {
 			server 127.0.0.1:8000;
