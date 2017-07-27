@@ -36,3 +36,6 @@ command=/node_modules/.bin/webpack --config {{ WEBPACK_CONFIG}} --watch {{ WEBPA
 stdout_logfile=/var/log/supervisor/%(program_name)s/stdout.log
 stderr_logfile=/var/log/supervisor/%(program_name)s/stderr.log
 {% endif %}
+
+[include]
+files=/etc/supervisord.d/*.conf

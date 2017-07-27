@@ -117,6 +117,11 @@ The templates are [Jinja2](http://jinja.pocoo.org/)-based templates stored in
 `nginx.conf.jinja`, `supervisord.conf.jinja`, or `gunicorn.conf.jinja` in a
 `docker/templates/` directory at the root of your application's repo.
 
+The base supervisord template has an `[include]` section that will cause all
+files ending in `.conf` in an `/etc/supervisord.d/` directory to be included.
+This allows you to copy files to this location in your container or just mount
+a volume for that directory.
+
 If you do define your own templates, all environment variables starting with
 `USER_` will also be available within any of those templates.  Also, if you want
 to *extend* the base templates, just use `{% extends 'base/<templatename>' %}`.
