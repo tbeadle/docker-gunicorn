@@ -22,6 +22,7 @@ NGINX_VARS = {
     'KEEPALIVE_TIMEOUT': os.environ.get('KEEPALIVE_TIMEOUT', '0'),
     'INCLUDE_HTTP_CONF': os.environ.get('INCLUDE_HTTP_CONF', None),
     'INCLUDE_SERVER_CONF': os.environ.get('INCLUDE_SERVER_CONF', None),
+    'PROXY_READ_TIMEOUT': os.environ.get('PROXY_READ_TIMEOUT', '60s'),
     'SERVER_NAME': os.environ.get('SERVER_NAME', ''),
     'SSL_BUNDLE': os.environ.get('SSL_BUNDLE', ''),
     'STATIC_EXPIRES': os.environ.get('STATIC_EXPIRES', '7d'),

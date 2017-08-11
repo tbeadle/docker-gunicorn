@@ -3,7 +3,7 @@
 set -eo pipefail
 
 repo=tbeadle/gunicorn-nginx
-rev=2
+rev=3
 
 versions=( "$@" )
 if [ ${#versions[@]} -eq 0 ]; then
