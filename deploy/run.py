@@ -49,9 +49,16 @@ SUPERVISOR_VARS = {
 GUNICORN_VARS = {
 }
 
-USER_VARS = dict(
-    item for item in os.environ.items() if item[0].startswith('USER_')
-)
+class SemiStrictUndefined(jinja2.StrictUndefined):
+    """ When an template variable is encountered that is not in the jinja2
+    environment, check the OS environment and return that if it exists.
+    Otherwise, raise an exception just like `StrictUndefined`.
+    """
+    def __str__(self):
+        try:
+            return os.environ[self._undefined_name]
+        except KeyError:
+            return super().__str__()
 
 ENV = jinja2.Environment(
     autoescape=False,
@@ -59,14 +66,11 @@ ENV = jinja2.Environment(
         '{}/docker/templates'.format(os.environ['APP_ROOT']),
         os.environ['TEMPLATE_DIR'],
     ]),
-    undefined=jinja2.StrictUndefined,
+    undefined=SemiStrictUndefined,
 )
 
 def render_template(name, tpl_vars, outfile):
     template = ENV.select_template((name, 'base/{}'.format(name)))
-    if USER_VARS:
-        tpl_vars = dict(tpl_vars)
-        tpl_vars.update(USER_VARS)
     with open(outfile, 'w') as fil:
         print(template.render(**tpl_vars), file=fil)
 

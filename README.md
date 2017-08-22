@@ -123,9 +123,9 @@ files ending in `.conf` in an `/etc/supervisord.d/` directory to be included.
 This allows you to copy files to this location in your container or just mount
 a volume for that directory.
 
-If you do define your own templates, all environment variables starting with
-`USER_` will also be available within any of those templates.  Also, if you want
-to *extend* the base templates, just use `{% extends 'base/<templatename>' %}`.
+If you do define your own templates, all environment variables will also be
+available as variables within any of those templates.  Also, if you want to
+*extend* the base templates, just use `{% extends 'base/<templatename>' %}`.
 
 Note that, when setting variables to paths located within your application's
 directory, your application will be rooted at `/app` within the image.
