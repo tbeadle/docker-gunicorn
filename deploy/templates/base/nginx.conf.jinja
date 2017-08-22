@@ -95,7 +95,9 @@ http {
 				{% if SERVER_NAME -%}
 					server_name {{ SERVER_NAME }};
 				{%- endif %}
-				return 301 https://$host$request_uri;
+				{% block http_to_https_redirect -%}
+					return 301 https://$host$request_uri;
+				{%- endblock %}
 			}
 		{%- endif %}
 	{% endblock %}
