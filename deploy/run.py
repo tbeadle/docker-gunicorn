@@ -15,50 +15,37 @@ class InvalidProjectError(Exception):
 
 CRON_ENV = '/etc/cron.env'
 
-NGINX_VARS = {
-    'CA_CERT': os.environ.get('CA_CERT', ''),
-    'CLIENT_MAX_BODY_SIZE': os.environ.get('CLIENT_MAX_BODY_SIZE', '10m'),
-    'CLIENT_BODY_BUFFER_SIZE': os.environ.get('CLIENT_BODY_BUFFER_SIZE', '128k'),
-    'KEEPALIVE_TIMEOUT': os.environ.get('KEEPALIVE_TIMEOUT', '0'),
-    'INCLUDE_HTTP_CONF': os.environ.get('INCLUDE_HTTP_CONF', None),
-    'INCLUDE_SERVER_CONF': os.environ.get('INCLUDE_SERVER_CONF', None),
-    'PROXY_READ_TIMEOUT': os.environ.get('PROXY_READ_TIMEOUT', '60s'),
-    'SERVER_NAME': os.environ.get('SERVER_NAME', ''),
-    'SSL_BUNDLE': os.environ.get('SSL_BUNDLE', ''),
-    'STATIC_EXPIRES': os.environ.get('STATIC_EXPIRES', '7d'),
-    'STATIC_URL': os.environ.get('STATIC_URL', '/static/'),
-    'STATIC_ROOT': os.environ.get('STATIC_ROOT', '/static/'),
-    'USE_HSTS': bool(os.environ.get('USE_HSTS', '1')),
-}
+NGINX_VARS = os.environ.copy()
+NGINX_VARS.setdefault('CA_CERT', '')
+NGINX_VARS.setdefault('CLIENT_MAX_BODY_SIZE', '10m')
+NGINX_VARS.setdefault('CLIENT_BODY_BUFFER_SIZE', '128k')
+NGINX_VARS.setdefault('KEEPALIVE_TIMEOUT', '0')
+NGINX_VARS.setdefault('INCLUDE_HTTP_CONF', None)
+NGINX_VARS.setdefault('INCLUDE_SERVER_CONF', None)
+NGINX_VARS.setdefault('PROXY_READ_TIMEOUT', '60s')
+NGINX_VARS.setdefault('SERVER_NAME', '')
+NGINX_VARS.setdefault('SSL_BUNDLE', '')
+NGINX_VARS.setdefault('STATIC_EXPIRES', '7d')
+NGINX_VARS.setdefault('STATIC_URL', '/static/')
+NGINX_VARS.setdefault('STATIC_ROOT', '/static/')
+NGINX_VARS.setdefault('USE_HSTS', '1')
 
-SUPERVISOR_VARS = {
-    'APP_MODULE': os.environ.get('APP_MODULE', 'proj.wsgi'),
-    'APP_ROOT': os.environ.get('APP_ROOT', ''),
-    'GUNICORN_ARGS': os.environ.get('GUNICORN_ARGS', ''),
-    'WEBPACK_CONFIG':
-        os.environ['WEBPACK_CONFIG']
-        if (
-            not os.environ.get('PROD', '') and
-            os.path.exists(os.environ['WEBPACK_CONFIG']) and
-            os.path.exists(os.path.join('/node_modules', '.bin', 'webpack')))
-        else '',
-    'WEBPACK_ARGS': os.environ.get('WEBPACK_ARGS', ''),
-    'WWW_USER': os.environ.get('WWW_USER', 'www-data'),
-}
+SUPERVISOR_VARS = os.environ.copy()
+SUPERVISOR_VARS.setdefault('APP_MODULE', 'proj.wsgi')
+SUPERVISOR_VARS.setdefault('APP_ROOT', '')
+SUPERVISOR_VARS.setdefault('GUNICORN_ARGS', '')
+SUPERVISOR_VARS['WEBPACK_CONFIG'] = (
+    os.environ['WEBPACK_CONFIG']
+    if (
+        not os.environ.get('PROD', '') and
+        os.path.exists(os.environ['WEBPACK_CONFIG']) and
+        os.path.exists(os.path.join('/node_modules', '.bin', 'webpack'))
+    ) else ''
+)
+SUPERVISOR_VARS.setdefault('WEBPACK_ARGS', '')
+SUPERVISOR_VARS.setdefault('WWW_USER', 'www-data')
 
-GUNICORN_VARS = {
-}
-
-class SemiStrictUndefined(jinja2.StrictUndefined):
-    """ When an template variable is encountered that is not in the jinja2
-    environment, check the OS environment and return that if it exists.
-    Otherwise, raise an exception just like `StrictUndefined`.
-    """
-    def __str__(self):
-        try:
-            return os.environ[self._undefined_name]
-        except KeyError:
-            return super().__str__()
+GUNICORN_VARS = os.environ.copy()
 
 ENV = jinja2.Environment(
     autoescape=False,
@@ -66,7 +53,6 @@ ENV = jinja2.Environment(
         '{}/docker/templates'.format(os.environ['APP_ROOT']),
         os.environ['TEMPLATE_DIR'],
     ]),
-    undefined=SemiStrictUndefined,
 )
 
 def render_template(name, tpl_vars, outfile):
