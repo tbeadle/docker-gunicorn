@@ -9,6 +9,7 @@ echo "    gunicorn ${GUNICORN_VERSION}"
 echo "    supervisor ${SUPERVISOR_VERSION}"
 echo "    node ${NODE_VERSION}"
 echo "    npm ${NPM_VERSION}"
+echo "    yarn ${YARN_VERSION}"
 echo ""
 apt-get update
 
