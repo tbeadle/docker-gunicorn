@@ -28,6 +28,7 @@ apt-get install -y --no-install-recommends \
 	vim \
 	wget \
 	xz-utils \
+	zlib1g-dev \
 
 
 # Supervisord doesn't currently support running under python3,
