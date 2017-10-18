@@ -17,6 +17,7 @@ apt-get install -y --no-install-recommends \
 	ca-certificates \
 	cron \
 	gcc \
+	gnupg \
 	libbz2-dev \
 	libpcre3-dev \
 	libexpat1-dev \
