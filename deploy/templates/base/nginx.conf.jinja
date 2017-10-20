@@ -83,6 +83,7 @@ http {
 						expires         {{ STATIC_EXPIRES }};
 						add_header      pragma public;
 						add_header      cache-control "public";
+						etag						on;
 					{%  endblock %}
 				}
 
