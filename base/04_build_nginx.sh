@@ -32,3 +32,19 @@ CONFIG_ARGS="--prefix=${INSTALL_ROOT} \
 make -j 2
 make install
 ldconfig
+
+echo "Installing logrotate config for nginx."
+cat >/etc/logrotate.d/nginx <<EOF
+/var/log/supervisor/nginx/access.log /var/log/supervisor/error.log {
+	create 0644 ${WWW_USER} root
+	daily
+	rotate 10
+	missingok
+	notifempty
+	compress
+	sharedscripts
+	postrotate
+		/usr/local/bin/supervisorctl signal USR1 nginx
+	endscript
+}
+EOF

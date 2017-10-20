@@ -40,4 +40,7 @@ case ${PYTHON_VERSION} in
 	;;
 esac
 
-rm -r /var/lib/apt/lists/* /etc/cron.*/*
+rm -r /etc/cron.*/*
+# Install logrotate here so that its cron job still gets installed.
+apt-get install -y --no-install-recommends logrotate
+rm -r /var/lib/apt/lists/*
