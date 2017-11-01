@@ -208,6 +208,10 @@ in there.  These will get run in lexicographical order before the templates are
 processed.  Scripts in a `docker/post-deploy.d/` directory will get run
 **after** the templates are processed.
 
+After all that is done and immediately before supervisord is started, the file
+`${READY_FILE}` (which defaults to `/run/ready`) is touched. If you need to know
+when the deploy scripts are finished, you can just wait until that file exists.
+
 ## Logs
 
 Logs for nginx are stored in /var/log/supervisor/nginx.  Logs for gunicorn are stored in

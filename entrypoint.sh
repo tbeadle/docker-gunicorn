@@ -31,6 +31,9 @@ if [ $# -eq 0 ]; then
 	if [ -z "${PROD}" -a -f ${WEBPACK_CONFIG} ]; then
 		mkdir -p /var/log/supervisor/webpack
 	fi
+	if [ -n ${READY_FILE} ]; then
+		touch ${READY_FILE}
+	fi
 	exec supervisord -c /etc/supervisord.conf
 else
 	exec "$@"
