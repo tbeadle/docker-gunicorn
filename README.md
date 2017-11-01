@@ -109,6 +109,7 @@ USE_HSTS | If set to an empty string, HSTS will not be enabled.  Otherwise, it w
 
 Variable name | Meaning
 --------------|------------
+APP_ROOT | The base directory for where the python project is located.  (Defaults to `/app`)
 APP_MODULE | The python module containing the application's entry point.  (Defaults to `proj.wsgi`)
 GUNICORN_ARGS | Additional command-line arguments that will get passed to gunicorn.  (Defaults to the empty string)
 WEBPACK_ARGS | Additional arguments to pass to webpack, such as "-p" to minify the output bundles.  Defaults to "".

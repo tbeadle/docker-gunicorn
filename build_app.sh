@@ -3,16 +3,16 @@
 set -eo pipefail
 shopt -s nullglob
 
-for x in ${APP_ROOT}/docker/pre-build.d/*; do
+for x in ${PROJ_ROOT}/docker/pre-build.d/*; do
 	if [ ! -d "${x}" -a -x "${x}" ]; then
 		echo "----> Running ${x}"
 		"${x}"
 	fi
 done
 
-if [ -f ${APP_ROOT}/docker/requirements.txt ]; then
-	echo "Installing python requirements from ${APP_ROOT}/docker/requirements.txt"
-	pip install -r ${APP_ROOT}/docker/requirements.txt
+if [ -f ${PROJ_ROOT}/docker/requirements.txt ]; then
+	echo "Installing python requirements from ${PROJ_ROOT}/docker/requirements.txt"
+	pip install -r ${PROJ_ROOT}/docker/requirements.txt
 fi
 
 if [ -f ${PACKAGE_JSON} ]; then
@@ -24,7 +24,7 @@ if [ -f ${PACKAGE_JSON} ]; then
 	(cd $(dirname ${PACKAGE_JSON}) && npm install --production --prefix /)
 fi
 
-for x in ${APP_ROOT}/docker/post-build.d/*; do
+for x in ${PROJ_ROOT}/docker/post-build.d/*; do
 	if [ ! -d "${x}" -a -x "${x}" ]; then
 		echo "----> Running ${x}"
 		"${x}"

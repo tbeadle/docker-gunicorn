@@ -4,7 +4,7 @@ set -eo pipefail
 shopt -s nullglob
 
 if [ $# -eq 0 ]; then
-	for x in ${APP_ROOT}/docker/pre-deploy.d/*; do
+	for x in ${PROJ_ROOT}/docker/pre-deploy.d/*; do
 		if [ -x "${x}" ]; then
 			echo "-----> Running ${x}"
 			"${x}"
@@ -21,7 +21,7 @@ if [ $# -eq 0 ]; then
 		fi
 	fi
 	/etc/deploy/run.py
-	for x in ${APP_ROOT}/docker/post-deploy.d/*; do
+	for x in ${PROJ_ROOT}/docker/post-deploy.d/*; do
 		if [ -x "${x}" ]; then
 			echo "-----> Running ${x}"
 			"${x}"

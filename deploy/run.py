@@ -34,7 +34,6 @@ NGINX_VARS.setdefault('USE_HSTS', '1')
 
 SUPERVISOR_VARS = os.environ.copy()
 SUPERVISOR_VARS.setdefault('APP_MODULE', 'proj.wsgi')
-SUPERVISOR_VARS.setdefault('APP_ROOT', '')
 SUPERVISOR_VARS.setdefault('GUNICORN_ARGS', '')
 SUPERVISOR_VARS['WEBPACK_CONFIG'] = (
     os.environ['WEBPACK_CONFIG']
@@ -52,7 +51,7 @@ GUNICORN_VARS = os.environ.copy()
 ENV = jinja2.Environment(
     autoescape=False,
     loader=jinja2.FileSystemLoader([
-        '{}/docker/templates'.format(os.environ['APP_ROOT']),
+        '{}/docker/templates'.format(os.environ['PROJ_ROOT']),
         os.environ['TEMPLATE_DIR'],
     ]),
 )
