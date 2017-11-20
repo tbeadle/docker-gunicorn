@@ -27,6 +27,10 @@ NGINX_VARS.setdefault('PROXY_READ_TIMEOUT', '60s')
 NGINX_VARS.setdefault('ROOT_URL', '/')
 NGINX_VARS.setdefault('SERVER_NAME', '')
 NGINX_VARS.setdefault('SSL_BUNDLE', '')
+NGINX_VARS.setdefault(
+    'SSL_CIPHERS',
+    'ECDH+AESGCM:ECDH+AES256:ECDH+AES128:DH+3DES:!ADH:!AECDH:!MD5'
+)
 NGINX_VARS.setdefault('STATIC_EXPIRES', '7d')
 NGINX_VARS.setdefault('STATIC_URL', '/static/')
 NGINX_VARS.setdefault('STATIC_ROOT', '/static/')

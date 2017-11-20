@@ -100,6 +100,7 @@ PROXY_READ_TIMEOUT | If the gunicorn worker does not transmit anything within th
 ROOT_URL | The base URL path for the web site.  (Defaults to '/')
 SERVER_NAME | A space-separated list of server names used to match the **Host** header of client requests. (Defaults to using no `server_name` statement)
 SSL_BUNDLE | The patch to a .pem formatted SSL cert.  If specified, then all HTTP requests will be redirected to HTTPS.  (Defaults to not using SSL.  Please HTTPS all the things!)
+SSL_CIPHERS | The ciphers to allow for HTTPS.  (Defaults to `ECDH+AESGCM:ECDH+AES256:ECDH+AES128:DH+3DES:!ADH:!AECDH:!MD5`)
 STATIC_EXPIRES | Indicates for how long static files show be allowed to be cached.  See http://nginx.org/en/docs/syntax.html for the expected format.  (Defaults to `7d`)
 STATIC_URL | The URL path to where static files are to be stored.  These will be served by nginx and not proxied to gunicorn.  (Defaults to `/static/`)
 STATIC_ROOT | The file system path where static files will be stored.  (Defaults to `/static/`)
