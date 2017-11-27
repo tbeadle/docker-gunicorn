@@ -26,6 +26,7 @@ apt-get install -y --no-install-recommends \
 	libssl-dev \
 	locales \
 	make \
+	procps \
 	vim \
 	wget \
 	xz-utils \
