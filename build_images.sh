@@ -3,11 +3,11 @@
 set -eo pipefail
 
 repo=tbeadle/gunicorn-nginx
-rev=11
+rev=12
 
 versions=( "$@" )
 if [ ${#versions[@]} -eq 0 ]; then
-	versions=( 2.7 3.5 3.6 )
+	versions=( 2.7 3.5 3.6 3.7 )
 fi
 
 for ver in "${versions[@]}"; do
