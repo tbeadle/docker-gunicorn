@@ -30,7 +30,7 @@ You can also just use the supplied `build_images.sh` script.
 **Better yet**, just pull down the image from docker hub:
 
 ```bash
-docker pull tbeadle/gunicorn-nginx:3.6-r1-onbuild
+docker pull tbeadle/gunicorn-nginx:3.6-onbuild
 ```
 
 ## Building the image for your app
@@ -39,7 +39,7 @@ To use the image for for your application, simply create a Dockerfile in the
 root of your application's repo that at least contains:
 
 ```
-FROM tbeadle/gunicorn-nginx:3.6-r1-onbuild
+FROM tbeadle/gunicorn-nginx:3.6-onbuild
 ```
 
 Obviously, replace `3.6` with the appropriate version if using something other
