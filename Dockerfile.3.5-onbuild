@@ -1,4 +1,4 @@
-FROM tbeadle/gunicorn-nginx:3.5
+FROM adaminfinitum/gunicorn-nginx:3.5
 
 COPY build_app.sh /usr/local/bin/
 WORKDIR ${PROJ_ROOT}

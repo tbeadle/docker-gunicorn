@@ -2,7 +2,7 @@
 
 set -eo pipefail
 
-repo=tbeadle/gunicorn-nginx
+repo=adaminfinitum/gunicorn-nginx
 rev=12
 
 versions=( "$@" )

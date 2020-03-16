@@ -1,6 +1,7 @@
 FROM debian:buster
 
 ENV \
+	PYTHON_VERSION=3.8.2 \
 	NGINX_VERSION=1.17.9 \
 	GUNICORN_VERSION=20.0.4 \
 	SUPERVISOR_VERSION=4.1.0 \
@@ -18,7 +19,8 @@ ENV \
 	TEMPLATE_DIR=/etc/deploy/templates \
 	WEBPACK_CONFIG=/app/docker/webpack.config.js \
 	PACKAGE_JSON=/app/docker/package.json \
-
+	PORT=8080 \
+	HOST=0.0.0.0
 
 COPY install_base_deps.sh ${BUILD_ROOT}/install_base_deps.sh
 RUN ${BUILD_ROOT}/install_base_deps.sh
