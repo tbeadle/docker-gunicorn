@@ -4,6 +4,11 @@ deployment of WSGI applications a breeze.  There are Dockerfiles to build images
 that can be used when the appication is written for Python 2.7 or 3.5.  You
 *are* using Python 3.5+, right?
 
+## Credit to the creator
+I forked this repo from [github.com/tbeadle/docker-gunicorn](https://github.com/tbeadle/docker-gunicorn) an updated it to use the latest libraries (as of mid-march 2020) and made some adjustments to suit my needs, which are to use it for **Google Cloud Run** which requires the port of 8080 be used.
+
+Other than that I didn't change much and since my app lication requires Python 3.6, I probably won't test the other variants right away.
+
 The image uses NGINX as the web server and proxies appropriate requests to
 gunicorn.  They are managed by supervisord.
 
@@ -21,8 +26,8 @@ docker build -t <image_name:version-rev>-onbuild -f Dockerfile.<version>-onbuild
 For instance:
 
 ```bash
-docker build -t tbeadle/gunicorn-nginx:3.5 -f Dockerfile.3.5 .
-docker build -t tbeadle/gunicorn-nginx:3.5-onbuild -f Dockerfile.3.5-onbuild .
+docker build -t adaminfinitum/gunicorn-nginx:3.5 -f Dockerfile.3.5 .
+docker build -t adaminfinitum/gunicorn-nginx:3.5-onbuild -f Dockerfile.3.5-onbuild .
 ```
 
 You can also just use the supplied `build_images.sh` script.
@@ -30,7 +35,7 @@ You can also just use the supplied `build_images.sh` script.
 **Better yet**, just pull down the image from docker hub:
 
 ```bash
-docker pull tbeadle/gunicorn-nginx:3.6-onbuild
+docker pull adaminfinitum/gunicorn-nginx:3.6-onbuild
 ```
 
 ## Building the image for your app
@@ -39,7 +44,7 @@ To use the image for for your application, simply create a Dockerfile in the
 root of your application's repo that at least contains:
 
 ```
-FROM tbeadle/gunicorn-nginx:3.6-onbuild
+FROM adaminfinitum/gunicorn-nginx:3.6-onbuild
 ```
 
 Obviously, replace `3.6` with the appropriate version if using something other

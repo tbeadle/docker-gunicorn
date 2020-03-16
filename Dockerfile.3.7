@@ -1,13 +1,13 @@
-FROM debian:stretch
+FROM debian:buster
 
 ENV \
-	PYTHON_VERSION=3.7.0 \
-	NGINX_VERSION=1.14.0 \
-	GUNICORN_VERSION=19.9.0 \
-	SUPERVISOR_VERSION=3.3.4 \
-	NODE_VERSION=8.12.0 \
-	NPM_VERSION=6.1.0 \
-	YARN_VERSION=1.10.1 \
+	PYTHON_VERSION=3.7.7 \
+	NGINX_VERSION=1.17.9 \
+	GUNICORN_VERSION=20.0.4 \
+	SUPERVISOR_VERSION=4.1.0 \
+	NODE_VERSION=12.16.1 \
+	NPM_VERSION=6.14.2 \
+	YARN_VERSION=1.22.4 \
 	LANG=en_US.UTF-8 \
 	WWW_USER=www-data \
 	WWW_GROUP=www-data \
@@ -18,7 +18,13 @@ ENV \
 	READY_FILE=/run/ready \
 	TEMPLATE_DIR=/etc/deploy/templates \
 	WEBPACK_CONFIG=/app/docker/webpack.config.js \
-	PACKAGE_JSON=/app/docker/package.json
+	PACKAGE_JSON=/app/docker/package.json \
+	PACKAGE_JSON=/app/docker/package.json \
+	PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1 \
+    LANG=C.UTF-8 \
+	PORT=8080 \
+	HOST=0.0.0.0
 
 COPY install_base_deps.sh ${BUILD_ROOT}/install_base_deps.sh
 RUN ${BUILD_ROOT}/install_base_deps.sh
@@ -30,5 +36,5 @@ RUN ${BUILD_ROOT}/base/run.sh && \
 COPY deploy/ /etc/deploy/
 COPY entrypoint.sh /
 ENTRYPOINT [ "/entrypoint.sh" ]
-EXPOSE 80
+EXPOSE $PORT
 VOLUME [ "/var/log" ]
