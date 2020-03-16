@@ -19,6 +19,9 @@ ENV \
 	TEMPLATE_DIR=/etc/deploy/templates \
 	WEBPACK_CONFIG=/app/docker/webpack.config.js \
 	PACKAGE_JSON=/app/docker/package.json \
+	PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1 \
+    LANG=C.UTF-8 \
 	PORT=8080 \
 	HOST=0.0.0.0
 
