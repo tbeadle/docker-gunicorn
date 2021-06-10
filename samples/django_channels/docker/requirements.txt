@@ -1,3 +1,3 @@
-Django==1.11-b1
+Django==2.2.24
 asgi-redis==1.0.0
 channels==1.0.3
